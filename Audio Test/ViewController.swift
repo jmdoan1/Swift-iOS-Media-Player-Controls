@@ -14,39 +14,47 @@
 import UIKit
 import MediaPlayer
 
-
 class ViewController: UIViewController {
     
     //Create a variable to control MPMusicPlayerController, the internal "ipod" library
     let mp = MPMusicPlayerController.systemMusicPlayer()
     var timer = NSTimer()
     
-    // Add a notification observer for MPMusicPlayerControllerNowPlayingItemDidChangeNotification that fires a method when the track changes (to update track info label)
+    @IBOutlet var imageAlbum: UIImageView!
+    @IBOutlet weak var labelTitle: UILabel!
+    @IBOutlet weak var labelElapsed: UILabel!
+    @IBOutlet weak var labelDuration: UILabel!
+    @IBOutlet weak var labelRemaining: UILabel!    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //calls timer and related functions when view is first loaded to avoiding waiting for playback change notificaitons
+        mp.prepareToPlay()
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
+        self.timer.tolerance = 0.1
+        
+    }
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        // Add a notification observer for MPMusicPlayerControllerNowPlayingItemDidChangeNotification that fires a method when the track changes (to update track info label)
         mp.beginGeneratingPlaybackNotifications()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateNowPlayingInfo", name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ViewController.updateNowPlayingInfo), name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification, object: nil)
         
     }
     
     // Create function to change labels to current track info based on previous notification observer
     func updateNowPlayingInfo(){
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "timerFired:", userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
         self.timer.tolerance = 0.1
         
     }
-    
-    
-    @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var labelElapsed: UILabel!
-    @IBOutlet weak var labelDuration: UILabel!
-    @IBOutlet weak var labelRemaining: UILabel!
-    
-    
-    
     
     //Function to pull track info and update labels
     func timerFired(_:AnyObject) {
@@ -54,14 +62,18 @@ class ViewController: UIViewController {
         if let currentTrack = MPMusicPlayerController.systemMusicPlayer().nowPlayingItem {
             
             //pull artist and title for current track and show in lebalTitle
-            let trackName = currentTrack.valueForProperty(MPMediaItemPropertyTitle) as! String
+            let trackName = currentTrack.title!
             
-            let trackArtist = currentTrack.valueForProperty(MPMediaItemPropertyArtist) as! String
+            let trackArtist = currentTrack.artist!
             
             labelTitle.text = "\(trackArtist) - \(trackName)"
             
+            //set image to Album Artwork
+            imageAlbum.image = currentTrack.artwork?.imageWithSize(imageAlbum.bounds.size)
+            
             //Pull length of current track in seconds
-            let trackDuration = currentTrack.valueForProperty(MPMediaItemPropertyPlaybackDuration) as! Int
+            //let trackDuration = currentTrack.valueForProperty(MPMediaItemPropertyPlaybackDuration) as! Int
+            let trackDuration = currentTrack.playbackDuration
             
             //Convert length in seconds to length in minutes as an Int. Ex. 245 second song is 4.08333 minutes (4:05), this results in 4
             let trackDurationMinutes = trackDuration / 60
@@ -101,7 +113,7 @@ class ViewController: UIViewController {
             }
             
             //Find remaining time by subtraction the elapsed time from the duration
-            let trackRemaining = trackDuration - Int(trackElapsed)
+            let trackRemaining = trackDuration - trackElapsed
             
             //Repeat same steps to display remaining time
             let trackRemainingMinutes = trackRemaining / 60
@@ -109,14 +121,9 @@ class ViewController: UIViewController {
             let trackRemainingSeconds = trackRemaining % 60
             
             if trackRemainingSeconds < 10 {
-                
                 labelRemaining.text = "Remaining: \(trackRemainingMinutes):0\(trackRemainingSeconds)"
-                
             } else {
-                
-                
                 labelRemaining.text = "Remaining: \(trackRemainingMinutes):\(trackRemainingSeconds)"
-                
             }
             
             //set maximum value of the slider (established below)
@@ -125,15 +132,11 @@ class ViewController: UIViewController {
             //changes slider to number of seconds that have elapsed
             sliderTime.value = Float(trackElapsed)
             
-            
         }
-        
-        
         
     }
     
     @IBOutlet weak var sliderTime: UISlider!
-    
     
     //Function to make adjusting the slider move through the song. It's kind of clunky but idk how to make it un-clunky
     @IBAction func sliderTimeChanged(sender: AnyObject) {
@@ -153,7 +156,6 @@ class ViewController: UIViewController {
     @IBAction func buttonPlay(sender: AnyObject) {
         
         print("Play")
-        
         mp.play()
         
     }
@@ -188,36 +190,6 @@ class ViewController: UIViewController {
         
         mp.skipToNextItem()
         
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //volume slider. After lots and lots of research, I think this can only be done programmatically. UISliders added through the story board can only adjust the volume of sounds within the app relative to the device's current volume. The below function can adjust the device's volume and you can see it adjust when you use the actual volume buttons
-        //The CGRectMake numbers are optimized for viewing on an iPhone 6, so adjust as needed
-        let wrapperView = UIView(frame: CGRectMake(55, 320, 260, 20))
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(wrapperView)
-        
-        let volumeView = MPVolumeView(frame: wrapperView.bounds)
-        wrapperView.addSubview(volumeView)
-        
-        
-        
-        
-        
-        
-        //calls timer and related functions when view is first loaded to avoiding waiting playback change notificaitons
-        mp.prepareToPlay()
-        
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "timerFired:", userInfo: nil, repeats: true)
-        self.timer.tolerance = 0.1
-        
-        
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {

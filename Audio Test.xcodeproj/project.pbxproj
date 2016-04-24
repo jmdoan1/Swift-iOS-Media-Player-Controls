@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1A6B1DA1CCC6EF800DBB00C /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A6B1D91CCC6EF800DBB00C /* VolumeViewController.swift */; };
 		C1D47B501AEBCC4D00B65A09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D47B4F1AEBCC4D00B65A09 /* AppDelegate.swift */; };
 		C1D47B521AEBCC4D00B65A09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D47B511AEBCC4D00B65A09 /* ViewController.swift */; };
 		C1D47B551AEBCC4D00B65A09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D47B531AEBCC4D00B65A09 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C1A6B1D91CCC6EF800DBB00C /* VolumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VolumeViewController.swift; sourceTree = "<group>"; };
 		C1D47B4A1AEBCC4D00B65A09 /* Audio Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audio Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D47B4E1AEBCC4D00B65A09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1D47B4F1AEBCC4D00B65A09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				C1D47B561AEBCC4D00B65A09 /* Images.xcassets */,
 				C1D47B581AEBCC4D00B65A09 /* LaunchScreen.xib */,
 				C1D47B4D1AEBCC4D00B65A09 /* Supporting Files */,
+				C1A6B1D91CCC6EF800DBB00C /* VolumeViewController.swift */,
 			);
 			path = "Audio Test";
 			sourceTree = "<group>";
@@ -163,7 +166,7 @@
 				TargetAttributes = {
 					C1D47B491AEBCC4D00B65A09 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 96HBEQNDQG;
+						DevelopmentTeam = 28SGD9V9Q9;
 					};
 					C1D47B5E1AEBCC4D00B65A09 = {
 						CreatedOnToolsVersion = 6.3;
@@ -233,6 +236,7 @@
 			files = (
 				C1D47B521AEBCC4D00B65A09 /* ViewController.swift in Sources */,
 				C1D47B501AEBCC4D00B65A09 /* AppDelegate.swift in Sources */,
+				C1A6B1DA1CCC6EF800DBB00C /* VolumeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,9 +371,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Audio Test/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.justindoan.Audio-Test-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.justindoan.AudioTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -382,9 +386,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Audio Test/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.justindoan.Audio-Test-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.justindoan.AudioTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
