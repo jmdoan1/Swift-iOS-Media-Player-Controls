@@ -14,11 +14,14 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
     //Create a variable to control MPMusicPlayerController, the internal "ipod" library
     let mp = MPMusicPlayerController.systemMusicPlayer()
+    
     var timer = NSTimer()
+    
+    var mediapicker1: MPMediaPickerController?
     
     @IBOutlet var imageAlbum: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
@@ -34,6 +37,11 @@ class ViewController: UIViewController {
         
         self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
         self.timer.tolerance = 0.1
+        
+        let mediaPicker: MPMediaPickerController = MPMediaPickerController.self(mediaTypes:MPMediaType.Music)
+        mediaPicker.allowsPickingMultipleItems = false
+        mediapicker1 = mediaPicker
+        mediaPicker.delegate = self
         
     }
     
@@ -76,10 +84,10 @@ class ViewController: UIViewController {
             let trackDuration = currentTrack.playbackDuration
             
             //Convert length in seconds to length in minutes as an Int. Ex. 245 second song is 4.08333 minutes (4:05), this results in 4
-            let trackDurationMinutes = trackDuration / 60
+            let trackDurationMinutes = Int(trackDuration / 60)
             
             //Find the remainder from the previous equation. 245 / 60 is 4 with a remainder of 5. This results in 5
-            let trackDurationSeconds = trackDuration % 60
+            let trackDurationSeconds = Int(trackDuration % 60)
             
             //Create the lable for the length of the song. BUT a 4 minute long song with a 5 second remainder would show as "4:5" so..
             if trackDurationSeconds < 10 {
@@ -91,7 +99,6 @@ class ViewController: UIViewController {
                 
                 //if more than 10, display as is
                 labelDuration.text = "Length: \(trackDurationMinutes):\(trackDurationSeconds)"
-                
             }
             
             //Find elapsed time by pulling currentPlaybackTime
@@ -113,7 +120,7 @@ class ViewController: UIViewController {
             }
             
             //Find remaining time by subtraction the elapsed time from the duration
-            let trackRemaining = trackDuration - trackElapsed
+            let trackRemaining = Int(trackDuration) - Int(trackElapsed)
             
             //Repeat same steps to display remaining time
             let trackRemainingMinutes = trackRemaining / 60
@@ -141,7 +148,7 @@ class ViewController: UIViewController {
     //Function to make adjusting the slider move through the song. It's kind of clunky but idk how to make it un-clunky
     @IBAction func sliderTimeChanged(sender: AnyObject) {
         
-        //let trackElapsed = Float(mp.currentPlaybackTime)
+        //let trackElapsed = Float(mp.currentPlaybakTime)
         //print(trackElapsed);
         //^commented out because it creates a constant flow of 0's unless you are moving the slider
         
@@ -192,6 +199,21 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func buttonPick(sender: AnyObject) {
+        self.presentViewController(mediapicker1!, animated: true, completion: nil)
+    }
+    
+    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        print("you picked: \(mediaItemCollection)")
+        let selectedSong = mediaItemCollection
+        
+        mp.setQueueWithItemCollection(selectedSong)
+        mp.play()
+        
+    }
+
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
