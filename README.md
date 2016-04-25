@@ -14,6 +14,7 @@ Feel free to contact me with any questions at jmdoan1@gmail.com or on Reddit /u/
     3. Previous [song]
     4. Beggining [of song]
     5. Next [song]
+    6. Pick [somg(s) or playlist(s)]
 
   B. Labels: 
     1. Song artist and title
@@ -33,14 +34,4 @@ Feel free to contact me with any questions at jmdoan1@gmail.com or on Reddit /u/
       
 2. WHAT IT DOESN'T HAVE
 
-  A. Album information (including image)
-    1. I didn't need this so I didn't look into how to add it. I may do this later out of curiosity 
-   
-  B. Song picker (being able to browse your music and choose a song from within the app)
-    1. I just haven't looked into this or tried to tackle it yet
-    
-3. KNOWN ISSUES
-
-  A. Original initiation of music
-    1. If music has not been played via the music app since the last time the phone was turned on or restarted, this app will not load music
-    2. If music has not been played via the music app since audio has been played via other apps (e.g. YouTube), this app will not load music
+  A. Shuffle or repeat settings
