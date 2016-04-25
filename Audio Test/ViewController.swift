@@ -4,30 +4,25 @@
 //
 //  Created by Justin Doan on 4/25/15.
 //  Copyright (c) 2015 Justin Doan. All rights reserved.
-//
-//  This is a simple music controller built with Xcode 6.3.1 and Swift 1.2. (Updated Nov. 13, 2015 for Xcode 7 and swift 2) Music control functions will not work in iOS Simulator, but only when built to an actual device that has a music library. I believe this only controls the users actual ipod library and will not work with things such as Spotify or Pandora.
-//
-//  Nothing about this is particularly difficult, but I had difficulty finding all the information I needed as a new developer in one place so I thought I would put this together for anyone who might benefit.
-//
-//  Feel free to contact me with any questions at jmdoan1@gmail.com or on Reddit /u/AxeEffect3890
 
 import UIKit
 import MediaPlayer
 
 class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
-    //Create a variable to control MPMusicPlayerController, the internal "ipod" library
     let mp = MPMusicPlayerController.systemMusicPlayer()
     
     var timer = NSTimer()
     
     var mediapicker1: MPMediaPickerController?
     
+    var shuffleMode: MPMusicShuffleMode!
+    
     @IBOutlet var imageAlbum: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelElapsed: UILabel!
     @IBOutlet weak var labelDuration: UILabel!
-    @IBOutlet weak var labelRemaining: UILabel!    
+    @IBOutlet weak var labelRemaining: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,29 +33,17 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
         self.timer.tolerance = 0.1
         
-        let mediaPicker: MPMediaPickerController = MPMediaPickerController.self(mediaTypes:MPMediaType.Music)
-        mediaPicker.allowsPickingMultipleItems = false
-        mediapicker1 = mediaPicker
-        mediaPicker.delegate = self
-        
-    }
-    
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        
         // Add a notification observer for MPMusicPlayerControllerNowPlayingItemDidChangeNotification that fires a method when the track changes (to update track info label)
         mp.beginGeneratingPlaybackNotifications()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ViewController.updateNowPlayingInfo), name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification, object: nil)
         
-    }
-    
-    // Create function to change labels to current track info based on previous notification observer
-    func updateNowPlayingInfo(){
+        //Declare media picker for later display
+        let mediaPicker: MPMediaPickerController = MPMediaPickerController.self(mediaTypes:MPMediaType.Music)
+        mediaPicker.allowsPickingMultipleItems = true
+        mediapicker1 = mediaPicker
+        mediaPicker.delegate = self
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
-        self.timer.tolerance = 0.1
         
     }
     
@@ -136,10 +119,18 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
             //set maximum value of the slider (established below)
             sliderTime.maximumValue = Float(trackDuration)
             
-            //changes slider to number of seconds that have elapsed
+            //changes slider to as song progresses
             sliderTime.value = Float(trackElapsed)
             
         }
+        
+    }
+    
+    // Create function to change labels to current track info based on previous notification observer
+    func updateNowPlayingInfo(){
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: #selector(ViewController.timerFired(_:)), userInfo: nil, repeats: true)
+        self.timer.tolerance = 0.1
         
     }
     
@@ -147,10 +138,6 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
     //Function to make adjusting the slider move through the song. It's kind of clunky but idk how to make it un-clunky
     @IBAction func sliderTimeChanged(sender: AnyObject) {
-        
-        //let trackElapsed = Float(mp.currentPlaybakTime)
-        //print(trackElapsed);
-        //^commented out because it creates a constant flow of 0's unless you are moving the slider
         
         mp.currentPlaybackTime = NSTimeInterval(sliderTime.value)
         
@@ -162,14 +149,11 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     //Button functions -- I'm pretty sure these are self explanatory enough
     @IBAction func buttonPlay(sender: AnyObject) {
         
-        print("Play")
         mp.play()
         
     }
     
     @IBAction func buttonPause(sender: AnyObject) {
-        
-        print("Pause")
         
         mp.pause()
         
@@ -177,15 +161,11 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
     @IBAction func buttonPrevious(sender: AnyObject) {
         
-        print("Previous")
-        
         mp.skipToPreviousItem()
         
     }
     
     @IBAction func buttonBeginning(sender: AnyObject) {
-        
-        print("Beginning")
         
         mp.skipToBeginning()
         
@@ -193,19 +173,19 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
     @IBAction func buttonNext(sender: AnyObject) {
         
-        print("Next")
-        
         mp.skipToNextItem()
         
     }
     
+    
+    //Display the user's internal iPod library
     @IBAction func buttonPick(sender: AnyObject) {
         self.presentViewController(mediapicker1!, animated: true, completion: nil)
     }
     
+    //
     func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        print("you picked: \(mediaItemCollection)")
         let selectedSong = mediaItemCollection
         
         mp.setQueueWithItemCollection(selectedSong)

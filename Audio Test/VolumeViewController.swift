@@ -14,26 +14,15 @@ class VolumeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //Create view that holds volume slider with its frame made from the boundaries of the controller view
         let volumeSlider = MPVolumeView(frame: self.view.layer.bounds)
+        
+        //Add the new view to the view controller
         self.view.addSubview(volumeSlider)
+        
+        //To ensure the volume slider stays within the bounds of the view
         volumeSlider.clipsToBounds = true
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
