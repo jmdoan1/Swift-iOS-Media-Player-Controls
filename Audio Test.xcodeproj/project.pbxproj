@@ -83,12 +83,11 @@
 			children = (
 				C1D47B4F1AEBCC4D00B65A09 /* AppDelegate.swift */,
 				C1D47B511AEBCC4D00B65A09 /* ViewController.swift */,
-				C1D47B531AEBCC4D00B65A09 /* Main.storyboard */,
+				C1A6B1D91CCC6EF800DBB00C /* VolumeViewController.swift */,
 				C1D47B561AEBCC4D00B65A09 /* Images.xcassets */,
 				C1D47B581AEBCC4D00B65A09 /* LaunchScreen.xib */,
+				C1D47B531AEBCC4D00B65A09 /* Main.storyboard */,
 				C1D47B4D1AEBCC4D00B65A09 /* Supporting Files */,
-				C1A6B1D91CCC6EF800DBB00C /* VolumeViewController.swift */,
-				C1A6B1DB1CCD9EB000DBB00C /* CreditsViewController.swift */,
 			);
 			path = "Audio Test";
 			sourceTree = "<group>";
@@ -96,6 +95,7 @@
 		C1D47B4D1AEBCC4D00B65A09 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1A6B1DB1CCD9EB000DBB00C /* CreditsViewController.swift */,
 				C1D47B4E1AEBCC4D00B65A09 /* Info.plist */,
 			);
 			name = "Supporting Files";

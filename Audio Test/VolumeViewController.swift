@@ -20,9 +20,6 @@ class VolumeViewController: UIViewController {
         //Add the new view to the view controller
         self.view.addSubview(volumeSlider)
         
-        //To ensure the volume slider stays within the bounds of the view
-        volumeSlider.clipsToBounds = true
-        
     }
 
 }
