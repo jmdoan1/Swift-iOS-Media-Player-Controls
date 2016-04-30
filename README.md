@@ -4,7 +4,10 @@ This is a simple music controller built with Xcode 6.3.1 and Swift 1.2. (Updated
 
 Nothing about this is particularly difficult, but I had difficulty finding all the information I needed as a new developer in one place so I thought I would put this together for anyone who might benefit.
 
-Feel free to contact me with any questions at jmdoan1@gmail.com or on Reddit /u/AxeEffect3890
+For any questions:
+Twitter: @AxeEffect3890
+Reddit: /u/AxeEffect3890
+Email: justindoan@justindoan.com
 
 1. WHAT IT HAS:
 
