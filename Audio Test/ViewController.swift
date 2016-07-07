@@ -89,6 +89,12 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
             //Find elapsed time by pulling currentPlaybackTime
             let trackElapsed = mp.currentPlaybackTime
             
+            // avoid crash
+            if trackElapsed.isNaN
+            {
+                return
+            }
+            
             //Repeat same steps to display the elapsed time as we did with the duration
             let trackElapsedMinutes = Int(trackElapsed / 60)
             
