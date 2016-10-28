@@ -128,7 +128,6 @@
 				C1D47B461AEBCC4D00B65A09 /* Sources */,
 				C1D47B471AEBCC4D00B65A09 /* Frameworks */,
 				C1D47B481AEBCC4D00B65A09 /* Resources */,
-				50524F424C454D533F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -169,7 +168,6 @@
 				TargetAttributes = {
 					C1D47B491AEBCC4D00B65A09 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 28SGD9V9Q9;
 					};
 					C1D47B5E1AEBCC4D00B65A09 = {
 						CreatedOnToolsVersion = 6.3;
@@ -215,22 +213,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		50524F424C454D533F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export CODESIGN_ALLOCATE=/Library/JailCoder/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Library/JailCoder/Entitlements/Entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C1D47B461AEBCC4D00B65A09 /* Sources */ = {
